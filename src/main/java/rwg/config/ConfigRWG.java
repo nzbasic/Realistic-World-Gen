@@ -16,6 +16,8 @@ public class ConfigRWG {
     public static boolean generateVillages = true;
     public static boolean generateUndergroundLakes = true;
     public static boolean generateUndergroundLavaLakes = true;
+    public static boolean generateStrongholds = true;
+    public static boolean generateTerrain = true;
 
     public static void init(FMLPreInitializationEvent event) {
         config = new Configuration(event.getSuggestedConfigurationFile());
@@ -59,6 +61,8 @@ public class ConfigRWG {
             generateVillages = config.getBoolean("Generate Villages", "Settings", true, "");
             generateUndergroundLakes = config.getBoolean("Generate Underground Lakes", "Settings", true, "");
             generateUndergroundLavaLakes = config.getBoolean("Generate Underground Lava Lakes", "Settings", true, "");
+            generateStrongholds = config.getBoolean("Generate Strongholds", "Settings", true, "");
+            generateTerrain = config.getBoolean("Generate Terrain", "Settings", true, "");
 
         } catch (Exception e) {
             for (int c = 0; c < biomeIDs.length; c++) {

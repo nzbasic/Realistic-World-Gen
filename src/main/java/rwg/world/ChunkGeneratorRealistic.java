@@ -142,7 +142,12 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         biomesForGeneration = new RealisticBiomeBase[256];
         int k;
 
-        generateTerrain(cmr, cx, cy, blocks, metadata, biomesForGeneration, noise);
+        if (ConfigRWG.generateTerrain) {
+            generateTerrain(cmr, cx, cy, blocks, metadata, biomesForGeneration, noise);
+        } else {
+            // This part of generateTerrain is still required for biome generation
+            getNewNoise(cmr, cx * 16, cy * 16, biomesForGeneration);
+        }
 
         for (k = 0; k < 256; k++) {
             if (mapGenBiomes[k] > 0f) {
@@ -163,7 +168,10 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
             baseBiomesList[k] = biomesForGeneration[k].baseBiome;
         }
 
-        replaceBlocksForBiome(cx, cy, blocks, metadata, biomesForGeneration, baseBiomesList, noise);
+        if (ConfigRWG.generateTerrain) {
+            replaceBlocksForBiome(cx, cy, blocks, metadata, biomesForGeneration, baseBiomesList, noise);
+        }
+
         if (ConfigRWG.generateCaves) {
             caves.func_151539_a(this, worldObj, cx, cy, blocks);
         }
@@ -171,7 +179,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         if (ConfigRWG.generateMineshafts) {
             mineshaftGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
         }
-        strongholdGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
+
+        if (ConfigRWG.generateStrongholds) {
+            strongholdGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
+        }
+
         if (ConfigRWG.generateVillages) {
             villageGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
         }
@@ -464,7 +476,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         if (ConfigRWG.generateMineshafts) {
             mineshaftGenerator.generateStructuresInChunk(worldObj, rand, i, j);
         }
-        strongholdGenerator.generateStructuresInChunk(worldObj, rand, i, j);
+
+        if (ConfigRWG.generateStrongholds) {
+            strongholdGenerator.generateStructuresInChunk(worldObj, rand, i, j);
+        }
+
         if (ConfigRWG.generateVillages) {
             villageGenerator.generateStructuresInChunk(worldObj, rand, i, j);
         }
